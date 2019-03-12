@@ -34,10 +34,14 @@ lunar.leapMonth()           //获取该年是否有闰月，有返回月数，�
 ```
 //script src直接引用dist中的class.js文件，然后创建lunar实例对象即可。
 ```
-如果当前已安装node运行环境，可以直接命令行cd到Node.js文件夹中然后运行
-```npm install```
+如果当前已安装node运行环境，可以直接命令行cd到Node.js文件夹中,然后运行
+```
+npm install
+```
 等待安装完之后运行
-```npm run run```
+```
+npm run run
+```
 即可运行简单的HTTP服务器，访问的url地址为
 ```
 http://localhost:8000/api/lunar
