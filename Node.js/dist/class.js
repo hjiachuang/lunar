@@ -1,5 +1,6 @@
-module.exports = Lunar
-
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = Lunar
+}
 function Lunar(date) {
   this.year = this.getDateData().year       //公历年份
   this.month = this.getDateData().month     //公历月份
