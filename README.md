@@ -7,6 +7,33 @@
 
 ### 2019/03/12
 JavaScript版本
+####
+添加JavaScript版本，支持node.js环境和浏览器环境
+```
+//node.js
+let Lunar = require("class.js")
+let lunar = new Lunar()
+
+//属性和方法
+lunar.year                  //当前公历年份
+lunar.month                 //当前公历月份
+lunar.day                   //当前公历日期
+lunar.ylYear                //当前农历年份
+lunar.ylMonth               //当前农历月份
+lunar.ylDay                 //当前农历日期
+lunar.getLunarTime()        //获取农历中文格式（例：二月初二）
+lunar.getAnimals()          //获取该年生肖
+lunar.getYearGanZhi()       //获取天干地支纪年
+lunar.getMonthGanZhi()      //获取天干地支纪月
+lunar.getDayGanZhi()        //获取天干地支纪日
+lunar.getFestival()         //获取该天节日
+lunar.getJieQi()            //获取该月节气
+lunar.leapMonth()           //获取该年是否有闰月，有返回月数，没有返回0
+```
+
+```
+//script src直接引用dist中的class.js文件，然后创建lunar实例对象即可。
+```
 ### 2019/03/08
 PHP版本：5+ <br>
 
