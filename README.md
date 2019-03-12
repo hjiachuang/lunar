@@ -12,7 +12,7 @@ JavaScript版本
 ```
 //node.js
 let Lunar = require("class.js")
-let lunar = new Lunar()
+let lunar = new Lunar()     //括号中可以接受传参，数据类型为字符串，格式为：yyyy-m-d 或 yyyy-mm-dd
 
 //属性和方法
 lunar.year                  //当前公历年份
@@ -34,12 +34,20 @@ lunar.leapMonth()           //获取该年是否有闰月，有返回月数，�
 ```
 //script src直接引用dist中的class.js文件，然后创建lunar实例对象即可。
 ```
+如果当前已安装node运行环境，可以直接命令行cd到Node.js文件夹中然后运行
+```npm install```
+等待安装完之后运行
+```npm run run```
+即可运行简单的HTTP服务器，访问的url地址为
+```
+http://localhost:8000/api/lunar
+```
+**可以接受传参，传参跟php版本一致，见下文。
+
+
 ### 2019/03/08
 PHP版本：5+ <br>
-
-## 更新内容：
-##
-
+####
 原php文件引用的是new DateTime对象中的 $obj->format('U')来获取当前日期相对于1900-1-31日的秒数差再除以86400（一天的秒数）的差值。
 由于是小值减大值，结果是负数且带小数的，在向上取整的过程中，出现了1901-12-14和1901-12-15这两天的差值为2的情况。
 意思就是
