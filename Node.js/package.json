@@ -1,0 +1,16 @@
+{
+  "name": "lunar",
+  "version": "1.0.0",
+  "description": "lunar-app",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node app.js"
+  },
+  "author": "aidioute",
+  "license": "ISC"
+}
