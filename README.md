@@ -1,7 +1,7 @@
 # lunar -- 公历转换农历Api
 
 ## 测试Url：（php服务器）
-  https://ali.aidioute.cn/api/lunar/getLunar.php
+  https://api.aidioute.cn/lunar/getLunar.php
 
 ## 更新：
 
