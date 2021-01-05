@@ -394,8 +394,10 @@ class Lunar
         }
         if ($offset > 9) {
             $monthDiZhi = $this->monthDiZhi[$offset - 10];
-        } else {
+        } else if($offset > 0) {
             $monthDiZhi = $this->monthDiZhi[$offset];
+        } else {
+            $monthDiZhi = $this->monthDiZhi[count($this->monthDiZhi) + $offset];
         }
         return $monthTianGan . $monthDiZhi . '月';
     }
