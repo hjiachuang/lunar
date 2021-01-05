@@ -6,9 +6,9 @@
 ## 更新：
 
 ### 2021/01/06
-PHP版本改动
+JavaScript版本和PHP版本改动
 #### 
-修改文件：PHP/class/lunar.php (line 398) 
+修改文件：PHP/class/lunar.php (line 398) 和 Node.js/dist/class.js (line 400)
 
 修改内容：当月份为1月份，且日期已经过了小寒节气的时候，$offset的值为-1，导致后面的$this->monthDiZhi数组无法读取下标为-1的值。
 
