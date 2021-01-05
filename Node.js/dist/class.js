@@ -396,8 +396,10 @@ Lunar.prototype.getMonthGanZhi = function () {
   }
   if (offset > 9) {
     monthDiZhi = this.monthDiZhi[offset - 10]
-  } else {
+  } else if(offset > 0) {
     monthDiZhi = this.monthDiZhi[offset]
+  } else {
+    monthDiZhi = this.monthDiZhi[this.monthDiZhi.length + offset]
   }
   return monthTianGan + monthDiZhi + '月'
 }
