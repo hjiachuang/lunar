@@ -266,26 +266,36 @@ Lunar.prototype.getLunarTime = function () {
 }
 
 //获取该年对应的天干地支年
-Lunar.prototype.getYearGanZhi = function () {
-  return this.getYearTianGan() + this.getYearDiZhi() + "年"
+Lunar.prototype.getYearGanZhi = function (ylYear) {
+  year = ylYear ? ylYear : this.ylYear
+  return this.getYearTianGan(year) + this.getYearDiZhi(year) + "年"
 }
 
 //获取该年对应的年天干
-Lunar.prototype.getYearTianGan = function (year) {
-  year = year ? year : this.ylYear
+Lunar.prototype.getYearTianGan = function (ylYear) {
+  year = ylYear ? ylYear : this.ylYear
   return this.tianGan[(year - 4) % 10]
 }
 
 //获取该年对应的年地支
-Lunar.prototype.getYearDiZhi = function () {
-  return this.yearDiZhi[(this.ylYear - 4) % 12]
+Lunar.prototype.getYearDiZhi = function (ylYear) {
+  year = ylYear ? ylYear : this.ylYear
+  return this.yearDiZhi[(year - 4) % 12]
 }
 
 //获取该年对应的天干地支月
-Lunar.prototype.getMonthGanZhi = function () {
+Lunar.prototype.getMonthGanZhi = function (ylYear, ylMonth) {
+  year = ylYear ? ylYear : this.ylYear
+  month = ylMonth ? ylMonth : this.ylMonth
+  return this.getMonthTianGan(year) + this.getMonthDiZhi(month)
+}
+
+//获取该年对应的月天干
+Lunar.prototype.getMonthTianGan = function (ylYear) {
+  year = ylYear ? ylYear : this.ylYear
   let jieQi = []
-  let yearTianGan = this.getYearTianGan(this.year)
-  let monthFirstTianGan = "", monthTianGan = "", monthDiZhi = ""
+  let yearTianGan = this.getYearTianGan(year)
+  let monthFirstTianGan = "", monthTianGan = ""
   let offset = 0
   switch (yearTianGan) {
     case '甲':
@@ -312,9 +322,7 @@ Lunar.prototype.getMonthGanZhi = function () {
   for (let i = 1; i < 13; i++) {
     jieQi.push(this.getJieQi(null, i))
   }
-
   jieQi.push(this.getJieQi(this.year + 1, 1))
-
   switch (true) {
     case (this.month == 1 && this.day >= jieQi[0]['小寒']):
       offset = -1
@@ -394,14 +402,12 @@ Lunar.prototype.getMonthGanZhi = function () {
   } else {
     monthTianGan = this.tianGan[offset + this.tianGan.indexOf(monthFirstTianGan)]
   }
-  if (offset > 9) {
-    monthDiZhi = this.monthDiZhi[offset - 10]
-  } else if(offset > 0) {
-    monthDiZhi = this.monthDiZhi[offset]
-  } else {
-    monthDiZhi = this.monthDiZhi[this.monthDiZhi.length + offset]
-  }
-  return monthTianGan + monthDiZhi + '月'
+  return monthTianGan
+}
+
+Lunar.prototype.getMonthDiZhi = function (ylMonth) {
+  month = ylMonth ? ylMonth : this.ylMonth
+  return this.monthDiZhi[month - 1]
 }
 
 //获取该年对应的天干地支日

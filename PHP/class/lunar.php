@@ -69,8 +69,7 @@ class Lunar
 
 
     //对象构造器
-    public function __construct($curData = null)
-    {
+    public function __construct($curData = null){
         if (!empty($curData)) {
             if (preg_match('/\d{4}-\d{1,2}-\d{1,2}/', $curData)) {
                 $this->curDate = $curData;
@@ -124,8 +123,7 @@ class Lunar
     }
 
     //获取阳历对应的阴历年份月份和日期
-    public function init()
-    {
+    public function init(){
         $basedate = '1900-1-31'; //参照日期,农历对应为1900年正月初一
         $dateTime = date_create($basedate);
         $curTime = date_create($this->curDate);
@@ -184,8 +182,7 @@ class Lunar
     }
 
     //获取农历某年的总天数
-    public function getYearDays($year)
-    {
+    public function getYearDays($year){
         $sum = 348;//12*29=348,不考虑小月的情况下
         for ($i = 0x8000; $i >= 0x10; $i >>= 1) {
             $sum += ($this->dateInfo[$year - 1900] & $i) ? 1 : 0;
@@ -194,8 +191,7 @@ class Lunar
     }
 
     //获取农历某年闰月的天数
-    public function leapDays($year)
-    {
+    public function leapDays($year){
         if ($this->leapMonth($year)) {
             return (($this->dateInfo[$year - 1900] & 0x10000) ? 30 : 29);
         } else {
@@ -204,21 +200,18 @@ class Lunar
     }
 
     //获取农历某年的闰月为几月
-    public function leapMonth($year = null)
-    {
+    public function leapMonth($year = null){
         $year = $year? $year : $this->ylYear;
         return ($this->dateInfo[$year - 1900] & 0xf);
     }
 
     //获取农历某年某月的天数
-    public function monthDays($year, $month)
-    {
+    public function monthDays($year, $month){
         return (($this->dateInfo[$year - 1900] & (0x10000 >> $month)) ? 30 : 29);
     }
 
     //获取阳历对应的阴历文本格式（例：二月初一）
-    public function getLunarTime()
-    {
+    public function getLunarTime(){
         if ($this->leapMonth) { //是闰月
             $dateStr = '闰';
         } else { //不是闰月
@@ -264,29 +257,35 @@ class Lunar
     }
 
     //获取该年对应的天干地支年
-    public function getYearGanZhi()
-    {
-        return $this->getYearTianGan() . $this->getYearDiZhi() . '年';
+    public function getYearGanZhi($ylYear = null){
+        $ylYear = $ylYear ? $ylYear : $this->ylYear;
+        return $this->getYearTianGan($ylYear) . $this->getYearDiZhi($ylYear);
     }
 
     //获取该年对应的年天干
-    public function getYearTianGan($year = null)
-    {
-        $year = $year ? $year : $this->ylYear;
-        return $this->tianGan[($year - 4) % 10];
+    public function getYearTianGan($ylYear = null){
+        $ylYear = $ylYear ? $ylYear : $this->ylYear;
+        return $this->tianGan[($ylYear - 4) % 10];
     }
 
     //获取该年对应的年地支
-    public function getYearDiZhi()
-    {
-        return $this->yearDiZhi[($this->ylYear - 4) % 12];
+    public function getYearDiZhi($ylYear = null){
+        $ylYear = $ylYear ? $ylYear : $this->ylYear;
+        return $this->yearDiZhi[($ylYear - 4) % 12];
     }
 
     //获取该年对应的天干地支月
-    public function getMonthGanZhi()
-    {
+    public function getMonthGanZhi($ylYear = null, $ylMonth = null){
+        $ylYear = $ylYear ? $ylYear : $this->ylYear;
+        $ylMonth = $ylMonth ? $ylMonth : $this->ylMonth;
+        return $this->getMonthTianGan($ylYear) . $this->getMonthDiZhi($ylMonth);
+    }
+
+    //获取该年对应的月天干
+    public function getMonthTianGan($ylYear = null){
+        $ylYear = $ylYear ? $ylYear : $this->ylYear;
         $jieQi = array();
-        $yearTianGan = $this->getYearTianGan($this->year);
+        $yearTianGan = $this->getYearTianGan($ylYear);
         switch ($yearTianGan) {
             case '甲':
             case '己':
@@ -392,33 +391,29 @@ class Lunar
         } else {
             $monthTianGan = $this->tianGan[$offset + array_search($monthFirstTianGan, $this->tianGan)];
         }
-        if ($offset > 9) {
-            $monthDiZhi = $this->monthDiZhi[$offset - 10];
-        } else if($offset > 0) {
-            $monthDiZhi = $this->monthDiZhi[$offset];
-        } else {
-            $monthDiZhi = $this->monthDiZhi[count($this->monthDiZhi) + $offset];
-        }
-        return $monthTianGan . $monthDiZhi . '月';
+        return $monthTianGan;
+    }
+
+    //获取该年对应的月地支
+    public function getMonthDiZhi($ylMonth = null){
+        $ylMonth = $ylMonth ? $ylMonth : $this->ylMonth;
+        return $this->monthDiZhi[$ylMonth - 1];
     }
 
     //获取该年对应的天干地支日
-    public function getDayGanZhi()
-    {
+    public function getDayGanZhi(){
         $gan = $this->tianGan[$this->difDay % 10];
         $zhi = $this->yearDiZhi[($this->difDay + 4) % 12];
-        return $gan . $zhi . '日';
+        return $gan . $zhi;
     }
 
     //获取该年的生肖
-    public function getAnimals()
-    {
+    public function getAnimals(){
         return $this->animals[($this->ylYear - 1900) % 12];
     }
 
     //获取当天的节日
-    public function getFestival()
-    {
+    public function getFestival(){
         $curTime = new DateTime($this->curDate);
         $date = $curTime->format('md');
         $temp = array();
@@ -441,8 +436,7 @@ class Lunar
     }
 
     //获取相近的节气
-    public function getJieQi($year = null, $month = null)
-    {
+    public function getJieQi($year = null, $month = null){
         //获取年份的后两位数
         $year = $year ? $year % 100 : $this->year % 100;
 
